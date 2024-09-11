@@ -45,12 +45,21 @@ public class IntroToTimers extends JPanel implements ActionListener, KeyListener
 		
 		// 2. Set the time variable to maxTime
 
+		time = maxTime;
+		
 		// 3. Initialize timer to a new Timer object. For the first argument, use 1000/speed. For the second argument, use this
 
+		Timer timer = new Timer( 100,this);
+		
 		// 11. Run it! Notice how it doesn't update? That's because our timer isn't triggering the actionPerformed() method yet!
+		
+		
 		// 12. Make the timer start!
 
+		
 		// 13. Run the program. Is it possible for you to win? 
+		
+		
 		// 14. Figure out how to make it harder or easier! (Which condition is most related to whether you win or not?)
 	}
 
