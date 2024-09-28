@@ -1,5 +1,7 @@
 package _08_LeagueSnake;
 
+import java.util.ArrayList;
+
 import processing.core.PApplet;
 import processing.event.KeyEvent;
 
@@ -17,11 +19,11 @@ public class LeagueSnake extends PApplet {
 Segment head;
 int x = 100;
 int y = 100;
-
 int FoodX;
 int FoodY;
 int direction = UP;
 int FoodEaten = 0;    
+ArrayList<Segment>[]tail = new ArrayList[FoodEaten];
 
 /*
      * Setup methods
@@ -44,7 +46,7 @@ int FoodEaten = 0;
         // Set the food in a new random location
         FoodX = ((int)random(50)*10);
         FoodY = ((int)random(50)*10);
-        rect(FoodX, FoodY, 5,5);
+        
     }
 
     /*
@@ -78,10 +80,8 @@ rect(FoodX, FoodY, 10,10);
 
     void drawTail() {
         // Draw each segment of the tail
-    	fill(50,150,250);
-    	rect(30,20,15,10);
-    	rect(30,20,15,10);
-    	rect(30,20,15,10);
+    	tail[FoodEaten] = new Segment(10,10);
+    	
     }
 
     /*
@@ -94,7 +94,8 @@ rect(FoodX, FoodY, 10,10);
         // After drawing the tail, add a new segment at the "start" of the tail and
         // remove the one at the "end"
         // This produces the illusion of the snake tail moving.
-
+checkTailCollision();
+drawTail();
     }
 
     void checkTailCollision() {
@@ -134,14 +135,14 @@ rect(FoodX, FoodY, 10,10);
     
         if (direction == UP) {
             // Move head up
-            y--;
+            y-=5;
         } else if (direction == DOWN) {
             // Move head down
-                y++;
+                y+=5;
         } else if (direction == LEFT) {
-            x--;
+            x-=5;
         } else if (direction == RIGHT) {
-            x++;
+            x+=5;
         }
      checkBoundaries();
      
@@ -149,8 +150,14 @@ rect(FoodX, FoodY, 10,10);
 
     void checkBoundaries() {
         // If the snake leaves the frame, make it reappear on the other side
-        if(x>500 || x<0 || y>500 || y<0) {
-        	
+        if(x>500) {
+        	x=0;
+        } else if (x<0) {
+        	x=500;
+        } else if (y>500) {
+        	y=0;
+        } else if (y<0) {
+        	y=500;
         }
     }
 
@@ -159,6 +166,7 @@ rect(FoodX, FoodY, 10,10);
         // food appear
         if (x==FoodX && y==FoodY) {
         	FoodEaten++;
+        	dropFood();
         	drawFood();
         }
     }
